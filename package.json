@@ -1,0 +1,27 @@
+{
+  "name": "yolo_skill",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "babel": "babel babel/index.js -o babel/output.js",
+    "babel:build": "webpack --config babel/webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/plugin-transform-runtime": "^7.25.4",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/runtime": "^7.25.6",
+    "core-js": "^3.38.1"
+  },
+  "dependencies": {
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

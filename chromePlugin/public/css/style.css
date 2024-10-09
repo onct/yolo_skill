@@ -1,0 +1,9 @@
+#yolo__iframe {
+  position: fixed;
+  right: 0;
+  top: 30px;
+  border: none;
+  z-index: 10000;
+  height: 450px;
+  width: 300px;
+}

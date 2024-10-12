@@ -9,13 +9,14 @@ function init() {
   // 选择简历编码
   const jianDom = document.querySelector(".name");
   const jianCode = jianDom.getHTML().trim();
+  iframe.contentWindow.postMessage({ jianCode }, "*");
   // 获取【联系一下】的dom元素
   const chatDom = document.querySelector(".meta-box");
   chatDom.addEventListener("click", function () {
-    iframe.contentWindow.postMessage({ jianCode }, '*');
+    iframe.contentWindow.postMessage({ jianCode, action: "click" }, "*");
   });
 }
 
-window.onload = function() {
+window.onload = function () {
   init();
-}
+};

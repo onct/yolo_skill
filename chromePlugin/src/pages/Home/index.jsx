@@ -1,31 +1,24 @@
-import { useState, useEffect } from "react";
 import styles from "./index.module.css";
 import { Button, Input, Form } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-// import { getInfo } from '../../fetch/apis';
+import { useSelector } from "react-redux";
+import { addRemark } from "../../fetch/apis";
 const { TextArea } = Input;
 
-const Home = () => {
-  // 简历状态
-  const [info, setInfo] = useState(null);
-  // 简历code
-  const [jianCode, setJianCode] = useState("");
+const Home = (props) => {
+  const userInfo = useSelector((state) => state.userInfo);
+  const { name } = userInfo || {};
+  const { jianCode, info } = props || {};
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.log("Success:", { ...values, name });
+    addRemark({ ...values, name, jianCode })
+      .then(() => {})
+      .catch((err) => {
+        console.log("Error:", err);
+      });
   };
 
-  useEffect(() => {
-    // getInfo().then
-    // setInfo({});
-    window.addEventListener("message", (res) => {
-      console.log("res", res);
-      setJianCode(res?.data?.jianCode);
-    });
-  }, []);
 
   return (
     <div className={styles.home}>
@@ -54,7 +47,6 @@ const Home = () => {
               remember: true,
             }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <Form.Item label="备注" name="describe">

@@ -33,6 +33,7 @@ const Home = () => {
   return (
     <div className={styles.home}>
       {contextHolder}
+      <p className={styles.tip}>登陆后可使用简历备注能力哦！</p>
       <div>
         <Form
           name="basic"

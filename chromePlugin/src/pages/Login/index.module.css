@@ -1,0 +1,15 @@
+.tip {
+  color: #cccccc;
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  &::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 10px;
+    background-color: #cccccc;
+    margin-right: 4px;
+  }
+}

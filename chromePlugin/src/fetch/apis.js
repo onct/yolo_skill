@@ -1,5 +1,20 @@
 import { fetch } from './axios';
 
+/**
+ * @description: 登陆接口
+ * @param {*} params
+ * * name: string
+ * @returns {*} params
+ * * name: string
+ */
+export const login = (params) => {
+  return fetch({
+    url: '/api/login',
+    method: 'GET',
+    params
+  })
+}
+
 /*
   获取简历记录
   params: {

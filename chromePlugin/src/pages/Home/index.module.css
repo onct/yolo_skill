@@ -1,6 +1,14 @@
-html{
-  background: transparent;
+.hasInfo {
+  color: red;
+  font-weight: 600;
+  svg {
+    color: red;
+  }
 }
-.home {
-  float: right;
+.noInfo {
+  color: #1677ff;
+  font-weight: 600;
+  svg {
+    color: #1677ff;
+  }
 }

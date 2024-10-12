@@ -1,6 +1,6 @@
 function init() {
   const iframe = document.createElement("iframe");
-  iframe.src = "http://localhost:5175/";
+  iframe.src = "http://localhost:5173/";
   iframe.setAttribute("id", "yolo__iframe");
   iframe.setAttribute("allowTransparency", "true");
 

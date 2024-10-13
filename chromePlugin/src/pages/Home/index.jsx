@@ -1,19 +1,27 @@
 import styles from "./index.module.css";
-import { Button, Input, Form } from "antd";
+import { Button, Input, Form, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { addRemark } from "../../fetch/apis";
 const { TextArea } = Input;
 
 const Home = (props) => {
-  const userInfo = useSelector((state) => state.userInfo);
-  const { name } = userInfo || {};
-  const { jianCode, info } = props || {};
+  const [messageApi, contextHolder] = message.useMessage();
+  // const userInfo = useSelector((state) => state.userInfo);
+  // const { name } = userInfo || {};
+  const { jianCode, info, name } = props || {};
 
   const onFinish = (values) => {
-    console.log("Success:", { ...values, name });
+    console.log("Success:", { ...values, name, jianCode });
+    // 备注、用户名、简历编号
     addRemark({ ...values, name, jianCode })
-      .then(() => {})
+      .then((res) => {
+        const { code, data } = res || {};
+        code === 1 && messageApi.open({
+          type: "success",
+          content: "提交成功",
+        });
+      })
       .catch((err) => {
         console.log("Error:", err);
       });
@@ -22,10 +30,11 @@ const Home = (props) => {
 
   return (
     <div className={styles.home}>
+      {contextHolder}
       <p className={info ? styles.hasInfo : styles.noInfo}>
         <UserOutlined />
         <span>
-          该候选人{jianCode}
+          该候选人
           {info ? "已" : "未"}联系
         </span>
       </p>

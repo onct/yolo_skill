@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
-import Router from "../src/router/index";
+// import Router from "../src/router/index";
+import Home from "./pages/Home/index";
 import { Button, Drawer } from "antd";
 import { DoubleRightOutlined } from "@ant-design/icons";
 import Styles from "./app.module.css";
 import { getCVInfo, setCVStatus } from "./fetch/apis";
 
 function App() {
-  // 简历状态
+  // 简历信息
   const [info, setInfo] = useState(null);
-  // 简历code
+  // 简历编号
   const [jianCode, setJianCode] = useState("");
-
+  // 当前用户名
+  const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
-
   const onClose = () => {
     setOpen(false);
   };
@@ -23,18 +24,24 @@ function App() {
   useEffect(() => {
     // 监听插件回调
     window.addEventListener("message", (res) => {
-      console.log("res", res);
-      const { jianCode, action } = res?.data || {};
+      // 获得简历编号、用户名、行为
+      const { jianCode, name, action } = res?.data || {};
+      console.log("lilin222", jianCode, name, action);
+      setJianCode(jianCode);
+      setName(name);
+      // 进入猎聘详情页，获取存储的简历信息
       if (jianCode && !action) {
-        setJianCode(jianCode);
-        // getCVInfo({ cv_id: jianCode }).then(({ data }) => {
-        //   setInfo(data);
-        // }).catch((err) => {
-        //   console.log("Error:", err);
-        // });
+        getCVInfo({ cv_id: jianCode })
+          .then(({ data }) => {
+            setInfo(data);
+          })
+          .catch((err) => {
+            console.log("Error:", err);
+          });
       }
+      // 点击联系按钮时，触发修改简历阅读状态
       if (action === "click") {
-        // setCVStatus({ cv_id: jianCode });
+        setCVStatus({ cv_id: jianCode });
       }
     });
   }, []);
@@ -51,7 +58,7 @@ function App() {
         mask={false}
         closeIcon={<DoubleRightOutlined />}
       >
-        <Router info={info} jianCode={jianCode} />
+        <Home info={info} jianCode={jianCode} name={name} />
       </Drawer>
     </>
   );

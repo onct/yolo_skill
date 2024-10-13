@@ -11,7 +11,10 @@ function init() {
   const jianCode = (jianDom.getHTML().trim() || "").split("：")[1];
   // 在这里替换不同用户名
   const postMsg = { jianCode, name: "lilin" };
-  iframe.contentWindow.postMessage(postMsg, "*");
+  // 动态加载的元素还没有完成dom加载,所以先等待一下
+  iframe.onload = function () {
+    iframe.contentWindow.postMessage(postMsg, "*");
+  }
   // 获取【联系一下】的dom元素
   const chatDom = document.querySelector(".chat-btn");
   chatDom.addEventListener("click", function () {

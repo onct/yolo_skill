@@ -4,3 +4,6 @@ html {
 .home {
   float: right;
 }
+.iframe {
+  display: none;
+}

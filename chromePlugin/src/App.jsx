@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 // import Router from "../src/router/index";
 import Home from "./pages/Home/index";
-import { Button, Drawer } from "antd";
+import { Button, Drawer, message } from "antd";
 import { DoubleRightOutlined } from "@ant-design/icons";
 import Styles from "./app.module.css";
 import { getCVInfo, setCVStatus } from "./fetch/apis";
 
 function App() {
+  const [messageApi, contextHolder] = message.useMessage();
   // 简历信息
   const [info, setInfo] = useState(null);
   // 简历编号
@@ -22,6 +23,14 @@ function App() {
   };
 
   useEffect(() => {
+    // 在这里看cookie 能不能全部取到
+    console.log('cookie', document.cookie)
+    // if(!document.cookie) {
+    //   messageApi.open({
+    //     type: "error",
+    //     content: "请先登录内部系统",
+    //   });
+    // }
     // 监听插件回调
     window.addEventListener("message", (res) => {
       // 获得简历编号、用户名、行为
@@ -48,6 +57,9 @@ function App() {
 
   return (
     <>
+      {contextHolder}
+      {/* src随便换一个你们公司系统的地址 */}
+      <iframe className={Styles.iframe} src="https://juejin.cn/post/7395446371031728169?utm_source=gold_browser_extension" />
       <Button type="primary" onClick={showDrawer} className={Styles.home}>
         简历工具🔧
       </Button>

@@ -6,17 +6,17 @@ import { addRemark } from "../../fetch/apis";
 const { TextArea } = Input;
 
 const Home = (props) => {
+  const { cvId, info, name, token } = props || {};
   const [messageApi, contextHolder] = message.useMessage();
   // const userInfo = useSelector((state) => state.userInfo);
   // const { name } = userInfo || {};
-  const { cvId, info, name, token } = props || {};
 
   const onFinish = (values) => {
     console.log("Success:", { ...values, name, cv_id: cvId });
     // 备注、用户名、简历编号
     addRemark({ ...values, created_by: name, cv_id: cvId, token })
       .then((res) => {
-        const { code, data } = res || {};
+        const { code } = res || {};
         code === 1 &&
           messageApi.open({
             type: "success",
@@ -27,30 +27,28 @@ const Home = (props) => {
         console.log("Error:", err);
       });
   };
+  const list = info.map((item, index) => (
+    <div className={styles.content} key={index}>
+      <span className={styles.content__name}>
+        备注人：{item && item.created_by}
+      </span>
+      <span className={styles.content__desc}>
+        备注内容：{item && item.content}
+      </span>
+      <span className={styles.content__time}>
+        备注时间：{item && item.created_at}
+      </span>
+    </div>
+  ));
 
   return (
     <div className={styles.home}>
       {contextHolder}
-      <p className={info ? styles.hasInfo : styles.noInfo}>
+      <p className={info.length ? styles.hasInfo : styles.noInfo}>
         <UserOutlined />
-        <span>
-          该候选人
-          {info.length ? "已" : "未"}联系
-        </span>
+        <span>该候选人{info.length ? "已" : "未"}联系</span>
       </p>
-      {info.length && (
-        <div>
-          <p>
-            <span>备注人：{ info[0] && info[0].created_by }</span>
-          </p>
-          <p>
-            <span>备注内容：{ info[0] && info[0].content }</span>
-          </p>
-          <p>
-            <span>备注时间：{ info[0] && info[0].created_at }</span>
-          </p>
-        </div>
-      )}
+      {info.length > 0 && <div>{list}</div>}
       <div>
         <Form
           name="basic"

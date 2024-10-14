@@ -9,7 +9,7 @@ import { getCVInfo, setCVStatus } from "./fetch/apis";
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
   // 简历信息
-  const [info, setInfo] = useState(null);
+  const [info, setInfo] = useState([]);
   // 简历编号
   const [cvId, setCvId] = useState("");
   // 当前用户名

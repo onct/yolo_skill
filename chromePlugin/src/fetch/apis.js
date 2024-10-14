@@ -34,7 +34,7 @@ export const login = (params) => {
 */
 export const getCVInfo = (params) => {
   return fetch({
-    url: '/api/xxx',
+    url: '/chrome-plugin',
     method: 'GET',
     params
   })
@@ -51,8 +51,8 @@ export const getCVInfo = (params) => {
 */
 export const setCVStatus = (params) => {
   return fetch({
-    url: '/api/xxx',
-    method: 'POST',
+    url: '/chrome-plugin',
+    method: 'PUT',
     params
   })
 }
@@ -70,8 +70,8 @@ export const setCVStatus = (params) => {
 */
 export const addRemark = (params) => {
   return fetch({
-    url: '/api/xxx',
-    method: 'POST',
+    url: '/chrome-plugin',
+    method: 'post',
     params
   })
 }

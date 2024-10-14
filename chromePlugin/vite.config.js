@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/chrome-plugin": {
-        target: "http://localhost:8888",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
     },

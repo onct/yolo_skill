@@ -38,7 +38,7 @@ const Home = (props) => {
           {info ? "已" : "未"}联系
         </span>
       </p>
-      {!info && (
+      {(
         <div>
           <Form
             name="basic"

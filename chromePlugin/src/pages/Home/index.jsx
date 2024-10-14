@@ -9,12 +9,12 @@ const Home = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
   // const userInfo = useSelector((state) => state.userInfo);
   // const { name } = userInfo || {};
-  const { jianCode, info, name } = props || {};
+  const { jianCode, info, name, token } = props || {};
 
   const onFinish = (values) => {
     console.log("Success:", { ...values, name, jianCode });
     // 备注、用户名、简历编号
-    addRemark({ ...values, name, jianCode })
+    addRemark({ ...values, name, jianCode, token })
       .then((res) => {
         const { code, data } = res || {};
         code === 1 && messageApi.open({

@@ -1,4 +1,15 @@
-function init() {
+function getStorageData(k) {
+  return new Promise((resolve) => {
+      // eslint-disable-next-line no-undef
+      const storage = chrome.storage.sync
+      storage.get(k, function (data) {
+          resolve(data[k])
+      })
+  })
+}
+
+async function init() {
+  const token = await getStorageData('token');
   const iframe = document.createElement("iframe");
   iframe.src = "http://localhost:5173/";
   iframe.setAttribute("id", "yolo__iframe");
@@ -10,7 +21,7 @@ function init() {
   const jianDom = document.querySelector(".jsx-350099301 > span");
   const jianCode = (jianDom.getHTML().trim() || "").split("：")[1];
   // 在这里替换不同用户名
-  const postMsg = { jianCode, name: "lilin" };
+  const postMsg = { jianCode, name: "lilin", token };
   // 动态加载的元素还没有完成dom加载,所以先等待一下
   iframe.onload = function () {
     iframe.contentWindow.postMessage(postMsg, "*");

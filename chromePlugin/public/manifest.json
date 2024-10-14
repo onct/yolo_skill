@@ -12,7 +12,12 @@
     "default_icon": "img/image.png",
     "default_title": "简历工具"
   },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
   "permissions": [
+    "cookies",
     "contextMenus",
     "tabs",
     "notifications",

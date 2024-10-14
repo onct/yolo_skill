@@ -22,12 +22,22 @@ function App() {
   const onClose = () => {
     setOpen(false);
   };
+  const getQuery = (url) => {
+    const result = {}
+    const reg1 = /([^?=&#]+)=([^?=&#]+)/g
+    const reg2 = /#([^?=&#]+)/g
+    url.replace(reg1, (n, x, y) => (result[x] = y))
+    url.replace(reg2, (n, x) => (result['HASH'] = x))
+    console.log('result:', result);
+    return result
+  }
 
   useEffect(() => {
     // 监听插件回调
     window.addEventListener("message", (res) => {
       // 获得简历编号、用户名、行为
-      const { jianCode, name, action, token } = res?.data || {};
+      const { url, name, action, token } = res?.data || {};
+      const { res_id_encode } = getQuery(url) || {};
       console.log('前台111', token);
       if (!token) {
         messageApi.open({
@@ -36,13 +46,13 @@ function App() {
         });
         return;
       }
-      console.log("lilin222", jianCode, name, action, token);
-      setJianCode(jianCode);
+      console.log("lilin222", res_id_encode, name, action, token);
+      setJianCode(res_id_encode);
       setName(name);
       setToken(token);
       // 进入猎聘详情页，获取存储的简历信息
-      if (jianCode && !action) {
-        getCVInfo({ cv_id: jianCode, token })
+      if (res_id_encode && !action) {
+        getCVInfo({ cv_id: res_id_encode, token })
           .then(({ data }) => {
             setInfo(data);
           })
@@ -56,7 +66,7 @@ function App() {
       }
       // 点击联系按钮时，触发修改简历阅读状态
       if (action === "click") {
-        setCVStatus({ cv_id: jianCode, token }).catch(() => {
+        setCVStatus({ cv_id: res_id_encode, token }).catch(() => {
           messageApi.open({
             type: "error",
             content: "请先登录内部系统",

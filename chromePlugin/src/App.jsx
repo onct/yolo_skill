@@ -32,6 +32,17 @@ function App() {
     return result;
   };
 
+  const getCVInfoData = () => {
+    return getCVInfo({ cv_id: cvId, token })
+      .then(({ data }) => {
+        setInfo(data);
+        return data;
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+      });
+  }
+
   useEffect(() => {
     // 监听插件回调
     window.addEventListener("message", (res) => {
@@ -52,17 +63,13 @@ function App() {
       setToken(token);
       // 进入猎聘详情页，获取存储的简历信息
       if (res_id_encode && !action) {
-        getCVInfo({ cv_id: res_id_encode, token })
-          .then(({ data }) => {
-            setInfo(data);
-          })
-          .catch((err) => {
-            console.log("Error:", err);
-          });
+        getCVInfoData();
       }
       // 点击联系按钮时，触发修改简历阅读状态
       if (action === "click") {
-        setCVStatus({ cv_id: res_id_encode, token }).catch(() => {});
+        setCVStatus({ cv_id: res_id_encode, token }).then(() => {
+          getCVInfoData();
+        }).catch(() => {});
       }
     });
   }, []);
@@ -80,7 +87,7 @@ function App() {
         mask={false}
         closeIcon={<DoubleRightOutlined />}
       >
-        <Home info={info} cvId={cvId} name={name} token={token} />
+        <Home info={info} getCVInfoData={getCVInfoData} cvId={cvId} name={name} token={token} />
       </Drawer>
     </>
   );

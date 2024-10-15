@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from "./index.module.css";
 import { Button, Input, Form, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -6,22 +7,26 @@ import { addRemark } from "../../fetch/apis";
 const { TextArea } = Input;
 
 const Home = (props) => {
-  const { cvId, info, name, token } = props || {};
+  const [loading, setLoading] = useState(false);
+  const { cvId, info, name, token, getCVInfoData } = props || {};
   const [messageApi, contextHolder] = message.useMessage();
   // const userInfo = useSelector((state) => state.userInfo);
   // const { name } = userInfo || {};
 
   const onFinish = (values) => {
+    setLoading(true);
     console.log("Success:", { ...values, name, cv_id: cvId });
     // 备注、用户名、简历编号
     addRemark({ ...values, created_by: name, cv_id: cvId, token })
-      .then((res) => {
+      .then(async (res) => {
         const { code } = res || {};
+        await getCVInfoData();
         code === 1 &&
           messageApi.open({
             type: "success",
             content: "提交成功",
           });
+        setLoading(false);
       })
       .catch((err) => {
         console.log("Error:", err);
@@ -78,7 +83,7 @@ const Home = (props) => {
               span: 1,
             }}
           >
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               提交
             </Button>
           </Form.Item>

@@ -2,7 +2,7 @@ import axios from "axios";
 export const fetch = (props = {}) => {
   const axiosBase = axios.create({
     // lilin: baseURL写成后端接口的域名
-    baseURL: 'http://localhost:8000/v1',
+    baseURL: 'http://staging-crm-api.atkinsinsights.com/v1',
     timeout: 7000, // 请求超时时间
     withCredentials: true,
   });

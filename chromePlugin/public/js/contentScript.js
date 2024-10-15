@@ -11,7 +11,7 @@ function getStorageData(k) {
 async function init() {
   const token = await getStorageData("token");
   const iframe = document.createElement("iframe");
-  iframe.src = "http://localhost:5173/";
+  iframe.src = "https://chrome-plugin.atkinsinsights.com/";
   iframe.setAttribute("id", "yolo__iframe");
   iframe.setAttribute("allowTransparency", "true");
 

@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/chrome-plugin": {
-        target: "http://localhost:8000",
+        target: "http://staging-crm-api.atkinsinsights/",
         changeOrigin: true,
       },
     },

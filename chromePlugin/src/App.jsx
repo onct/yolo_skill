@@ -32,7 +32,7 @@ function App() {
     return result;
   };
 
-  const getCVInfoData = () => {
+  const getCVInfoData = (cvId, token) => {
     return getCVInfo({ cv_id: cvId, token })
       .then(({ data }) => {
         setInfo(data);
@@ -63,12 +63,12 @@ function App() {
       setToken(token);
       // 进入猎聘详情页，获取存储的简历信息
       if (res_id_encode && !action) {
-        getCVInfoData();
+        getCVInfoData(res_id_encode, token);
       }
       // 点击联系按钮时，触发修改简历阅读状态
       if (action === "click") {
         setCVStatus({ cv_id: res_id_encode, token }).then(() => {
-          getCVInfoData();
+          getCVInfoData(res_id_encode, token);
         }).catch(() => {});
       }
     });

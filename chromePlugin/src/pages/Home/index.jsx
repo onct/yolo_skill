@@ -20,7 +20,7 @@ const Home = (props) => {
     addRemark({ ...values, created_by: name, cv_id: cvId, token })
       .then(async (res) => {
         const { code } = res || {};
-        await getCVInfoData();
+        await getCVInfoData(cvId, token);
         code === 1 &&
           messageApi.open({
             type: "success",

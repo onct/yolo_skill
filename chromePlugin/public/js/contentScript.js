@@ -3713,26 +3713,22 @@ async function init() {
       withCredentials: true,
       data: data,
     }).then(function (res) {
-      console.log(res, "hshshshs");
       // 选择简历编码
       // const jianDom = document.querySelector(".jsx-350099301 > span");
       // const jianCode = (jianDom.getHTML().trim() || "").split("：")[1];
       // 在这里替换不同用户名
-      const postMsg = { url: window.location.href, cvId: res.data.data.usercIdEncode, name: "lilin", token };
-      console.log("postMsg", postMsg);
+      const postMsg = { url: window.location.href, cvId: res.data.data.usercIdEncode, name: "Sita Wang", token };
       // 动态加载的元素还没有完成dom加载,所以先等待一下
-      iframe.onload = function () {
-        iframe.contentWindow.postMessage(postMsg, "*");
-        // 获取【联系一下】的dom元素
-        const chatDom = document.querySelector(".chat-btn");
-        console.log("chatDom", chatDom);
-        chatDom.addEventListener("click", function () {
-          iframe.contentWindow.postMessage(
-            { ...postMsg, action: "click" },
-            "*"
-          );
-        });
-      };
+      iframe.contentWindow.postMessage(postMsg, "*");
+      // 获取【联系一下】的dom元素
+      const chatDom = document.querySelector(".chat-btn");
+      console.log("chatDom", chatDom);
+      chatDom.addEventListener("click", function () {
+        iframe.contentWindow.postMessage(
+          { ...postMsg, action: "click" },
+          "*"
+        );
+      });
     });
   } catch (err) {
     console.log(err);

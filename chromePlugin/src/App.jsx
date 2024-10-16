@@ -47,6 +47,7 @@ function App() {
     // 监听插件回调
     window.addEventListener("message", (res) => {
       // 获得简历编号、用户名、行为
+      console.log('appjs', res)
       const { url, cvId, name, action, token } = res?.data || {};
       // const { res_id_encode } = getQuery(url) || {};
       console.log("前台111", token);

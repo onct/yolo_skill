@@ -3684,11 +3684,14 @@ function getStorageData(k) {
   });
 }
 
+let count = 0;
+
 async function init() {
+  count += 1;
   const token = await getStorageData("token");
   const iframe = document.createElement("iframe");
   iframe.src = "https://chrome-plugin.atkinsinsights.com/";
-  iframe.setAttribute("id", "yolo__iframe");
+  iframe.setAttribute("id", `yolo__iframe_${count}`);
   iframe.setAttribute("allowTransparency", "true");
   document.body.appendChild(iframe);
 

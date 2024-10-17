@@ -12,10 +12,11 @@ function App() {
   const [info, setInfo] = useState([]);
   // 简历编号
   const [cvId, setCvId] = useState("");
+  const [resIdEncode, setResIdEncode] = useState("");
   // 当前用户名
   const [name, setName] = useState("");
   const [token, setToken] = useState("");
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -48,9 +49,8 @@ function App() {
     window.addEventListener("message", (res) => {
       // 获得简历编号、用户名、行为
       console.log('appjs', res)
-      const { url, cvId, name, action, token } = res?.data || {};
+      const { url, cvId, name, action, token, resIdEncode } = res?.data || {};
       // const { res_id_encode } = getQuery(url) || {};
-      console.log("前台111", token);
       if (!token) {
         messageApi.open({
           type: "error",
@@ -58,10 +58,11 @@ function App() {
         });
         return;
       }
-      console.log("lilin222", cvId, name, action, token);
+      console.log("lilin222", cvId, resIdEncode, name);
       setCvId(cvId);
       setName(name);
       setToken(token);
+      setResIdEncode(resIdEncode);
       // 进入猎聘详情页，获取存储的简历信息
       if (cvId && !action) {
         getCVInfoData(cvId, token);
@@ -88,7 +89,7 @@ function App() {
         mask={false}
         closeIcon={<DoubleRightOutlined />}
       >
-        <Home info={info} getCVInfoData={getCVInfoData} cvId={cvId} name={name} token={token} />
+        <Home info={info} getCVInfoData={getCVInfoData} cvId={cvId} name={name} token={token} resIdEncode= {resIdEncode}/>
       </Drawer>
     </>
   );

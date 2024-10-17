@@ -12,7 +12,10 @@
     color: #1677ff;
   }
 }
-
+.resIDcode {
+  color: #1576f2;
+  font-weight: 600;
+}
 .content {
   background-color: rgb(245, 245, 245);
   border-radius: 14px;

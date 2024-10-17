@@ -8,14 +8,14 @@ const { TextArea } = Input;
 
 const Home = (props) => {
   const [loading, setLoading] = useState(false);
-  const { cvId, info, name, token, getCVInfoData } = props || {};
+  const { cvId, info, name, token, getCVInfoData, resIdEncode } = props || {};
   const [messageApi, contextHolder] = message.useMessage();
   // const userInfo = useSelector((state) => state.userInfo);
   // const { name } = userInfo || {};
 
   const onFinish = (values) => {
     setLoading(true);
-    console.log("Success:", { ...values, name, cv_id: cvId });
+    console.log("Success:", resIdEncode, { ...values, name, cv_id: cvId });
     // 备注、用户名、简历编号
     addRemark({ ...values, created_by: name, cv_id: cvId, token })
       .then(async (res) => {
@@ -49,6 +49,10 @@ const Home = (props) => {
   return (
     <div className={styles.home}>
       {contextHolder}
+      <div>简历编号
+        <div className={styles.resIDcode}>{resIdEncode}</div>
+        不一致时或为空时请刷新页面
+      </div>
       <p className={info.length ? styles.hasInfo : styles.noInfo}>
         <UserOutlined />
         <span>该候选人{info.length ? "已" : "未"}联系</span>

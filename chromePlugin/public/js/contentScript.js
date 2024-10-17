@@ -3684,18 +3684,15 @@ function getStorageData(k) {
   });
 }
 
-let count = 0;
 
 async function init() {
-  count += 1;
   const token = await getStorageData("token");
   const iframe = document.createElement("iframe");
   iframe.src = "https://chrome-plugin.atkinsinsights.com/";
-  iframe.setAttribute("id", `yolo__iframe_${count}`);
+  iframe.setAttribute("id", `yolo__iframe`);
   iframe.setAttribute("allowTransparency", "true");
   document.body.appendChild(iframe);
 
-  console.log("cookie", document.cookie);
   const data = await getStorageData("data");
   try {
     axios({
@@ -3720,8 +3717,10 @@ async function init() {
       // const jianDom = document.querySelector(".jsx-350099301 > span");
       // const jianCode = (jianDom.getHTML().trim() || "").split("：")[1];
       // 在这里替换不同用户名
-      const postMsg = { url: window.location.href, cvId: res.data.data.usercIdEncode, name: "Sita Wang", token };
+      const postMsg = { url: window.location.href, cvId: res.data.data.usercIdEncode, resIdEncode: res.data.data.resIdEncode,name: "Dist V3", token };
+      console.log("postMsg", postMsg);
       // 动态加载的元素还没有完成dom加载,所以先等待一下
+      // iframe.onload = function () {
       iframe.contentWindow.postMessage(postMsg, "*");
       // 获取【联系一下】的dom元素
       const chatDom = document.querySelector(".chat-btn");
@@ -3732,6 +3731,7 @@ async function init() {
           "*"
         );
       });
+      // };
     });
   } catch (err) {
     console.log(err);
